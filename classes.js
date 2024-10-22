@@ -1,11 +1,14 @@
+
 class Boundary {
     static width = 64       //16 pixel(size of tile) * 4(400% zoom in)
     static height = 64      //16 pixel(size of tile) * 4(400% zoom in)
+    
     constructor({ position }) {
         this.position = position
         this.width = 64
         this.height = 64
     }
+
     draw() {
         c.fillStyle = 'rgba(255, 0, 0, 0)'      //r=255 and alpha = 0 for opacity = 0
         c.fillRect(this.position.x, this.position.y, this.width, this.height)

@@ -1,45 +1,183 @@
+
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
 canvas.width = 1024
 canvas.height = 576
 
-const collisionsMap = []  
 
-// creating array of arrays for co-ordination of collision blocks (in rows and columns)
-for (let i = 0; i < collisions.length; i += 70) {
-    collisionsMap.push(collisions.slice(i, i + 70))
-}
+let collisionsMap
+let canteenEntryMap
+let boundaries
+let canteenEntry
 
-const boundaries = []
+let canteenExitMap
+let canteenExit
 
-// for map to start from the gate
-const offset = {
-    x: -1950,
-    y: -2250
-}
+let image
+let foregroundimage
+let background
+let foreground
+let movable
 
-//creating boundary blocks for collision cordination 
-collisionsMap.forEach((row, i) => {
-    row.forEach((symbol, j) => {
-        if (symbol > 0)
-            boundaries.push(
-                new Boundary({
-                    position: {
-                        x: j * Boundary.width + offset.x,
-                        y: i * Boundary.height + offset.y
-                    }
+let offset
+
+let level = "main"
+let levels = {
+    "main":{
+        init: (offset= {x: -1950, y: -2250}) => {
+            collisionsMap = []  
+            for (let i = 0; i < collisions.length; i += 70) {
+                collisionsMap.push(collisions.slice(i, i + 70))
+            }
+            canteenEntryMap = []  
+        for (let i = 0; i < canteen_entry.length; i += 70) {
+                canteenEntryMap.push(canteen_entry.slice(i, i + 70))
+            }
+
+        boundaries = []
+
+        offset = {
+            x: offset.x,
+            y: offset.y
+        }
+ 
+        collisionsMap.forEach((row, i) => {
+            row.forEach((symbol, j) => {
+                if (symbol > 0)
+                    boundaries.push(
+                        new Boundary({
+                            position: {
+                                x: j * Boundary.width + offset.x,
+                                y: i * Boundary.height + offset.y
+                            }
+                        })
+                    )
+            })
+        })
+
+        canteenEntry = []
+        canteenEntryMap.forEach((row, i) => {
+            row.forEach((symbol, j) => {
+                if (symbol > 0)
+                    canteenEntry.push(
+                        new Boundary({
+                            position: {
+                                x: j * Boundary.width + offset.x,
+                                y: i * Boundary.height + offset.y
+                            }
+                        })
+                    )
+            })
+        })
+        
+        image = new Image()  //map image
+        image.src = './img/col_map.png'
+
+        foregroundimage = new Image()  //foregorund image
+        foregroundimage.src = './img/foreground.png'
+
+        
+        //setting a background object
+        background = new Sprite({
+            position: {
+                x: offset.x,
+                y: offset.y
+            },
+            image: image
+        })
+
+        //setting a foreground object
+        foreground = new Sprite({
+            position: {
+                x: offset.x,
+                y: offset.y
+            },
+            image: foregroundimage
+        })
+        
+
+        //objects that moves with the character
+        movables = [background, ...boundaries, foreground, ...canteenEntry]
+    }
+    },
+    "canteen":{
+        init: (offset={x:-150, y:-1050}) => {
+            collisionsMap = []  
+            for (let i = 0; i < canteenCollisions.length; i += 26) {
+                collisionsMap.push(canteenCollisions.slice(i, i + 26))
+            }
+            canteenExitMap = []  
+            for (let i = 0; i < canteen_exit.length; i += 26) {
+                canteenExitMap.push(canteen_exit.slice(i, i + 26))
+            }
+
+            offset = {
+                x: offset.x,
+                y: offset.y
+            }
+
+            canteenExit = []
+            canteenExitMap.forEach((row, i) => {
+                row.forEach((symbol, j) => {
+                    if (symbol > 0)
+                        canteenExit.push(
+                            new Boundary({
+                                position: {
+                                    x: j * Boundary.width + offset.x,
+                                    y: i * Boundary.height + offset.y
+                                }
+                            })
+                        )
                 })
-            )
-    })
-})
+            })
+
+            boundaries = []
+
+            
+
+            collisionsMap.forEach((row, i) => {
+                row.forEach((symbol, j) => {
+                    if (symbol > 0)
+                        boundaries.push(
+                            new Boundary({
+                                position: {
+                                    x: j * Boundary.width + offset.x,
+                                    y: i * Boundary.height + offset.y
+                                }
+                            })
+                        )
+                })
+            })
+
+       
+            image = new Image()  
+            image.src = './img/canteen.png'
+
+            foregroundimage = new Image()  
+            foregroundimage.src = './img/Empty.png'
+
+            background = new Sprite({
+                position: {
+                    x: offset.x,
+                    y: offset.y
+                },
+                image: image
+            })
+            foreground = new Sprite({
+                position: {
+                    x: offset.x,
+                    y: offset.y
+                },
+                image: foregroundimage
+            })
+            
+            movables = [background, ...boundaries, foreground, ...canteenExit]
+    }
+}
+}
 
 
-const image = new Image()  //map image
-image.src = './img/col_map.png'
-
-const foregroundimage = new Image()  //foregorund image
-foregroundimage.src = './img/foreground.png'
 
 //character images for different directions
 const playerDownImage = new Image()
@@ -73,23 +211,6 @@ const player = new Sprite({
     }
 })
 
-//setting a background object
-const background = new Sprite({
-    position: {
-        x: offset.x,
-        y: offset.y
-    },
-    image: image
-})
-
-//setting a foreground object
-const foreground = new Sprite({
-    position: {
-        x: offset.x,
-        y: offset.y
-    },
-    image: foregroundimage
-})
 
 //default key pressed status
 const keys = {
@@ -104,12 +225,12 @@ const keys = {
     },
     d: {
         pressed: false
+    },
+    q: {
+        pressed: false
     }
 }
 
-
-//objects that moves with the character
-const movables = [background, ...boundaries, foreground]
 
 let speed = 4       //speed for character movement
 
@@ -123,7 +244,41 @@ function rectangularCollision({rectangle1, rectangle2}) {
     )
 }
 
+const overlay = {
+    opacity: 0,
+}
 
+infoPanel = createInfoPanel()
+let activeBuilding = null;
+const interactionDistance = 300; // I think 200-300 is a good value
+
+function checkBuildingProximity() {
+    activeBuilding = null;
+    let closestDistance = Infinity;
+    
+    for (const building of Object.values(buildingInfo)) {
+        const dx = -background.position.x - building.position.x;
+        const dy = -background.position.y - building.position.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < interactionDistance && distance < closestDistance) {
+            activeBuilding = building;
+            closestDistance = distance;
+        }
+    }
+}
+
+function showBuildingInfo() {
+    if (activeBuilding) {
+        buildingInfoDisplay.innerHTML = `
+            <h3>${activeBuilding.name}</h3>
+            <p>${activeBuilding.description}</p>
+        `;
+        buildingInfoDisplay.style.display = 'block';
+    } else {
+        buildingInfoDisplay.style.display = 'none';
+    }
+}
 
 function animate() {
     window.requestAnimationFrame(animate)
@@ -132,9 +287,15 @@ function animate() {
     boundaries.forEach(boundary =>{
         boundary.draw()
     })
+    
     player.draw()
     foreground.draw()
 
+    // c.save()
+    // c.globalAlpha = overlay.opacity
+    // c.fillStyle = "black"
+    // c.fillRect(0, 0, canvas.width, canvas.height)
+    // c.restore()
 
    let moving  = true
    player.moving = false
@@ -154,6 +315,7 @@ function animate() {
                 break
             }
         }
+
         if (moving)
             movables.forEach(movable => { movable.position.y += speed }) //moves moveable objects creating illusion that character is moving
     }
@@ -216,9 +378,53 @@ function animate() {
         if (moving)
             movables.forEach(movable => { movable.position.x -= speed })
     }
+    else if (keys.q.pressed && lastKey== 'q'){
+        if (level == 'main'){
+            for(let i =0; i < canteenEntry.length; i++){  //checking for collision
+                const canteenEntry1 = canteenEntry[i]
+                if (rectangularCollision({
+                    rectangle1: player,
+                    rectangle2: canteenEntry1
+                })) {
+                    gsap.to(overlay, {
+                        opacity: 1,
+                        onComplete: () => {
+                            level = "canteen"
+                            levels[level].init()
+                        }
+                    })
+                    break
+                }
+            }
+        } 
+        else if(level == "canteen"){
+            for(let i =0; i < canteenExit.length; i++){  //checking for collision
+                const canteenExit1 = canteenExit[i]
+                if (rectangularCollision({
+                    rectangle1: player,
+                    rectangle2: canteenExit1
+                })) {
+                    gsap.to(overlay, {
+                        opacity: 1,
+                        onComplete: () => {
+                            level = "main"
+                            levels[level].init(offset={x:-3225, y:-820})
+                        }
+                    })
+                    break
+                }
+            }
+        }
+    }
+    checkBuildingProximity();
+    updateLocationDisplay(createLocationDisplay(), -background.position.x, -background.position.y);
+
 }
 
+
+levels[level].init()
 animate()
+
 
 let lastKey = ''
 
@@ -244,6 +450,16 @@ window.addEventListener('keydown', (e) => {
             keys.d.pressed = true
             lastKey = 'd'
             break
+        case 'q':
+            keys.q.pressed = true
+            lastKey = 'q'
+            break
+        case 'l':
+            locationDisplay.style.display = locationDisplay.style.display === 'none' ? 'block' : 'none'
+            break
+    }
+    if (e.key === 'i') {
+        updateInfoPanel(infoPanel, activeBuilding);
     }
 })
 
@@ -266,5 +482,25 @@ window.addEventListener('keyup', (e) => {
         case 'd':
             keys.d.pressed = false
             break
+        case 'q':
+            keys.q.pressed = false
+            break
+    }
+    if (e.key === 'i') {
+        infoPanel.style.display = 'none';
     }
 })
+
+// Ensure the info panel and location display stay within the canvas boundary
+function updateUIPositions() {
+    const canvasRect = canvas.getBoundingClientRect();
+    
+    infoPanel.style.top = `${canvasRect.top + 10}px`;
+    infoPanel.style.right = `${window.innerWidth - canvasRect.right + 10}px`;
+    
+    locationDisplay.style.top = `${canvasRect.top + 10}px`;
+    locationDisplay.style.left = `${canvasRect.left + 10}px`;
+}
+
+window.addEventListener('resize', updateUIPositions);
+updateUIPositions();
