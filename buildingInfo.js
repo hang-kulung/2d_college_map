@@ -13,5 +13,11 @@ const buildingInfo = {
         name: "Basketball court",
         description: "Play basketball anytime",
         position: { x: 218, y: 1500 }
-    }
+    },
+    Canteern: {
+        name: "Canteen",
+        description: "A nice place to talk over a cup of tea",
+        position: { x: 3238, y: 818 }
+    },
+
 };

@@ -280,6 +280,8 @@ function showBuildingInfo() {
     }
 }
 
+const locationDisplay = createLocationDisplay();  
+
 function animate() {
     window.requestAnimationFrame(animate)
     
