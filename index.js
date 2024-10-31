@@ -419,7 +419,7 @@ function animate() {
         }
     }
     checkBuildingProximity();
-    updateLocationDisplay(createLocationDisplay(), -background.position.x, -background.position.y);
+    updateLocationDisplay(locationDisplay, -background.position.x, -background.position.y);
 
 }
 
