@@ -14,7 +14,7 @@ const buildingInfo = {
         description: "Play basketball anytime",
         position: { x: 218, y: 1500 }
     },
-    Canteern: {
+    canteen: {
         name: "Canteen",
         description: "A nice place to talk over a cup of tea",
         position: { x: 3238, y: 818 }

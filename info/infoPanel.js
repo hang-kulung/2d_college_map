@@ -19,12 +19,16 @@ function createInfoPanel() {
 
 function updateInfoPanel(infoPanel, building) {
     if (building) {
+        // Show the panel with the building's information
         infoPanel.innerHTML = `
             <h3 style="margin: 0 0 10px 0; font-size: 18px;">${building.name}</h3>
             <p style="margin: 0;">${building.description}</p>
         `;
         infoPanel.style.display = 'block';
     } else {
+        // Hide the panel if the building is null
         infoPanel.style.display = 'none';
     }
 }
+
+

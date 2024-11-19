@@ -26,97 +26,110 @@ let level = "main"
 let levels = {
     "main":{
         init: (offset= {x: -1950, y: -2250}) => {
+            // Create a 2D array of collisions from the 1D array of collisions
             collisionsMap = []  
             for (let i = 0; i < collisions.length; i += 70) {
                 collisionsMap.push(collisions.slice(i, i + 70))
             }
+            // Create a 2D array of canteen entry points from the 1D array of canteen entry points
             canteenEntryMap = []  
-        for (let i = 0; i < canteen_entry.length; i += 70) {
+            for (let i = 0; i < canteen_entry.length; i += 70) {
                 canteenEntryMap.push(canteen_entry.slice(i, i + 70))
             }
 
-        boundaries = []
+            // Create an array of boundaries
+            boundaries = []
 
-        offset = {
-            x: offset.x,
-            y: offset.y
-        }
+            // Set the offset
+            offset = {
+                x: offset.x,
+                y: offset.y
+            }
  
-        collisionsMap.forEach((row, i) => {
-            row.forEach((symbol, j) => {
-                if (symbol > 0)
-                    boundaries.push(
-                        new Boundary({
-                            position: {
-                                x: j * Boundary.width + offset.x,
-                                y: i * Boundary.height + offset.y
-                            }
-                        })
-                    )
+            // Iterate over the collisions map and create a boundary for each collision
+            collisionsMap.forEach((row, i) => {
+                row.forEach((symbol, j) => {
+                    if (symbol > 0)
+                        boundaries.push(
+                            new Boundary({
+                                position: {
+                                    x: j * Boundary.width + offset.x,
+                                    y: i * Boundary.height + offset.y
+                                }
+                            })
+                        )
+                })
             })
-        })
 
-        canteenEntry = []
-        canteenEntryMap.forEach((row, i) => {
-            row.forEach((symbol, j) => {
-                if (symbol > 0)
-                    canteenEntry.push(
-                        new Boundary({
-                            position: {
-                                x: j * Boundary.width + offset.x,
-                                y: i * Boundary.height + offset.y
-                            }
-                        })
-                    )
+            // Iterate over the canteen entry map and create a boundary for each canteen entry point
+            canteenEntry = []
+            canteenEntryMap.forEach((row, i) => {
+                row.forEach((symbol, j) => {
+                    if (symbol > 0)
+                        canteenEntry.push(
+                            new Boundary({
+                                position: {
+                                    x: j * Boundary.width + offset.x,
+                                    y: i * Boundary.height + offset.y
+                                }
+                            })
+                        )
+                })
             })
-        })
-        
-        image = new Image()  //map image
-        image.src = './img/col_map.png'
+            
+            // Load the map image
+            image = new Image()  //map image
+            image.src = './img/col_map.png'
 
-        foregroundimage = new Image()  //foregorund image
-        foregroundimage.src = './img/foreground.png'
+            // Load the foreground image
+            foregroundimage = new Image()  //foregorund image
+            foregroundimage.src = './img/foreground.png'
 
-        
-        //setting a background object
-        background = new Sprite({
-            position: {
-                x: offset.x,
-                y: offset.y
-            },
-            image: image
-        })
+            
+            // Set up the background object
+            background = new Sprite({
+                position: {
+                    x: offset.x,
+                    y: offset.y
+                },
+                image: image
+            })
 
-        //setting a foreground object
-        foreground = new Sprite({
-            position: {
-                x: offset.x,
-                y: offset.y
-            },
-            image: foregroundimage
-        })
-        
+            // Set up the foreground object
+            foreground = new Sprite({
+                position: {
+                    x: offset.x,
+                    y: offset.y
+                },
+                image: foregroundimage
+            })
+            
 
-        //objects that moves with the character
-        movables = [background, ...boundaries, foreground, ...canteenEntry]
-    }
+            // Set up the movable objects
+            movables = [background, ...boundaries, foreground, ...canteenEntry]
+        }
     },
     "canteen":{
         init: (offset={x:-150, y:-1050}) => {
+            // Initialize the collision map
             collisionsMap = []  
             for (let i = 0; i < canteenCollisions.length; i += 26) {
                 collisionsMap.push(canteenCollisions.slice(i, i + 26))
             }
+
+            // Initialize the exit map
             canteenExitMap = []  
             for (let i = 0; i < canteen_exit.length; i += 26) {
                 canteenExitMap.push(canteen_exit.slice(i, i + 26))
             }
 
+            // Set the offset
             offset = {
                 x: offset.x,
                 y: offset.y
             }
 
+            // Create the exit boundaries
             canteenExit = []
             canteenExitMap.forEach((row, i) => {
                 row.forEach((symbol, j) => {
@@ -132,10 +145,10 @@ let levels = {
                 })
             })
 
+            // Create the boundaries
             boundaries = []
 
-            
-
+            // Iterate over the collision map and create boundaries
             collisionsMap.forEach((row, i) => {
                 row.forEach((symbol, j) => {
                     if (symbol > 0)
@@ -148,15 +161,17 @@ let levels = {
                             })
                         )
                 })
-            })
+            });
 
-       
+            // Load the map image
             image = new Image()  
             image.src = './img/canteen.png'
 
+            // Load the foreground image
             foregroundimage = new Image()  
             foregroundimage.src = './img/Empty.png'
 
+            // Set up the background object
             background = new Sprite({
                 position: {
                     x: offset.x,
@@ -164,6 +179,8 @@ let levels = {
                 },
                 image: image
             })
+
+            // Set up the foreground object
             foreground = new Sprite({
                 position: {
                     x: offset.x,
@@ -171,9 +188,11 @@ let levels = {
                 },
                 image: foregroundimage
             })
-            
+
+            // Set up the movable objects
             movables = [background, ...boundaries, foreground, ...canteenExit]
-    }
+        }
+
 }
 }
 
@@ -249,90 +268,58 @@ const overlay = {
 }
 
 infoPanel = createInfoPanel()
-let activeBuilding = null;
-const interactionDistance = 300; // I think 200-300 is a good value
-
-function checkBuildingProximity() {
-    activeBuilding = null;
-    let closestDistance = Infinity;
-    
-    for (const building of Object.values(buildingInfo)) {
-        const dx = -background.position.x - building.position.x;
-        const dy = -background.position.y - building.position.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        if (distance < interactionDistance && distance < closestDistance) {
-            activeBuilding = building;
-            closestDistance = distance;
-        }
-    }
-}
-
-function showBuildingInfo() {
-    if (activeBuilding) {
-        buildingInfoDisplay.innerHTML = `
-            <h3>${activeBuilding.name}</h3>
-            <p>${activeBuilding.description}</p>
-        `;
-        buildingInfoDisplay.style.display = 'block';
-    } else {
-        buildingInfoDisplay.style.display = 'none';
-    }
-}
 
 const locationDisplay = createLocationDisplay();  
 
 function animate() {
+    // Request the next frame
     window.requestAnimationFrame(animate)
     
+    // Draw the background
     background.draw()
-    boundaries.forEach(boundary =>{
+    
+    // Draw each boundary
+    boundaries.forEach(boundary => {
         boundary.draw()
     })
     
+    // Draw the player
     player.draw()
+    
+    // Draw the foreground
     foreground.draw()
 
-    // c.save()
-    // c.globalAlpha = overlay.opacity
-    // c.fillStyle = "black"
-    // c.fillRect(0, 0, canvas.width, canvas.height)
-    // c.restore()
+    // Initialize movement and player movement status
+    let moving = true
+    player.moving = false
 
-   let moving  = true
-   player.moving = false
+    // Handle upward movement
     if (keys.w.pressed && lastKey == 'w') {
         player.moving = true
-        player.image = player.sprites.up            //playerUpImage load up
-        for(let i =0; i < boundaries.length; i++){  //checking for collision
+        player.image = player.sprites.up
+        for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
             if (rectangularCollision({
                 rectangle1: player,
-                rectangle2: {...boundary, position:{
-                    x:boundary.position.x,
-                    y:boundary.position.y + speed 
-                }}
+                rectangle2: { ...boundary, position: { x: boundary.position.x, y: boundary.position.y + speed } }
             })) {
                 moving = false
                 break
             }
         }
-
         if (moving)
-            movables.forEach(movable => { movable.position.y += speed }) //moves moveable objects creating illusion that character is moving
+            movables.forEach(movable => { movable.position.y += speed })
     }
 
+    // Handle leftward movement
     else if (keys.a.pressed && lastKey == 'a') {
         player.moving = true
         player.image = player.sprites.left
-        for(let i =0; i < boundaries.length; i++){
+        for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
             if (rectangularCollision({
                 rectangle1: player,
-                rectangle2: {...boundary, position:{
-                    x:boundary.position.x + speed,
-                    y:boundary.position.y 
-                }}
+                rectangle2: { ...boundary, position: { x: boundary.position.x + speed, y: boundary.position.y } }
             })) {
                 moving = false
                 break
@@ -341,17 +328,16 @@ function animate() {
         if (moving)
             movables.forEach(movable => { movable.position.x += speed })
     }
+
+    // Handle downward movement
     else if (keys.s.pressed && lastKey == 's') {
         player.moving = true
         player.image = player.sprites.down
-        for(let i =0; i < boundaries.length; i++){
+        for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
             if (rectangularCollision({
                 rectangle1: player,
-                rectangle2: {...boundary, position:{
-                    x:boundary.position.x,
-                    y:boundary.position.y - speed
-                }}
+                rectangle2: { ...boundary, position: { x: boundary.position.x, y: boundary.position.y - speed } }
             })) {
                 moving = false
                 break
@@ -361,17 +347,15 @@ function animate() {
             movables.forEach(movable => { movable.position.y -= speed })
     }
 
+    // Handle rightward movement
     else if (keys.d.pressed && lastKey == 'd') {
         player.moving = true
         player.image = player.sprites.right
-        for(let i =0; i < boundaries.length; i++){
+        for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
             if (rectangularCollision({
                 rectangle1: player,
-                rectangle2: {...boundary, position:{
-                    x:boundary.position.x - speed,
-                    y:boundary.position.y 
-                }}
+                rectangle2: { ...boundary, position: { x: boundary.position.x - speed, y: boundary.position.y } }
             })) {
                 moving = false
                 break
@@ -380,9 +364,12 @@ function animate() {
         if (moving)
             movables.forEach(movable => { movable.position.x -= speed })
     }
-    else if (keys.q.pressed && lastKey== 'q'){
-        if (level == 'main'){
-            for(let i =0; i < canteenEntry.length; i++){  //checking for collision
+
+    // Handle level transitions
+    else if (keys.q.pressed && lastKey == 'q') {
+        // Transition from main level to canteen
+        if (level == 'main') {
+            for (let i = 0; i < canteenEntry.length; i++) {
                 const canteenEntry1 = canteenEntry[i]
                 if (rectangularCollision({
                     rectangle1: player,
@@ -399,8 +386,9 @@ function animate() {
                 }
             }
         } 
-        else if(level == "canteen"){
-            for(let i =0; i < canteenExit.length; i++){  //checking for collision
+        // Transition from canteen to main level
+        else if (level == "canteen") {
+            for (let i = 0; i < canteenExit.length; i++) {
                 const canteenExit1 = canteenExit[i]
                 if (rectangularCollision({
                     rectangle1: player,
@@ -410,7 +398,7 @@ function animate() {
                         opacity: 1,
                         onComplete: () => {
                             level = "main"
-                            levels[level].init(offset={x:-3225, y:-820})
+                            levels[level].init(offset = { x: -3225, y: -820 })
                         }
                     })
                     break
@@ -418,13 +406,17 @@ function animate() {
             }
         }
     }
-    checkBuildingProximity();
-    updateLocationDisplay(locationDisplay, -background.position.x, -background.position.y);
 
+    // Check for collisions
+    checkCollision()
+
+    // Update location display
+    updateLocationDisplay(locationDisplay, -background.position.x, -background.position.y)
 }
 
 
 levels[level].init()
+
 animate()
 
 
