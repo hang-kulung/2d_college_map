@@ -1,5 +1,5 @@
 let level = 'main';
-
+let lastKey = '';
 const overlay = {
     opacity: 0,
 }
@@ -8,7 +8,11 @@ infoPanel = createInfoPanel()
 
 const locationDisplay = createLocationDisplay();  
 
-function animate() {
+levels[level].init();
+
+let spritesInitialized = false; 
+
+function animate() { 
     // Request the next frame
     window.requestAnimationFrame(animate)
     
@@ -151,76 +155,29 @@ function animate() {
     updateLocationDisplay(locationDisplay, -background.position.x, -background.position.y)
 }
 
+animate();
 
-levels[level].init()
-
-animate()
-
-
-let lastKey = ''
-
-//when key is pressed, status in keys object is set to true
 window.addEventListener('keydown', (e) => {
-    switch (e.key) {
-        case 'w':
-            keys.w.pressed = true
-            lastKey = 'w'
-            break
-
-        case 's':
-            keys.s.pressed = true
-            lastKey = 's'
-            break
-
-        case 'a':
-            keys.a.pressed = true
-            lastKey = 'a'
-            break
-
-        case 'd':
-            keys.d.pressed = true
-            lastKey = 'd'
-            break
-        case 'q':
-            keys.q.pressed = true
-            lastKey = 'q'
-            break
+       switch (e.key) {
+        case 'w': case 'a': case 's': case 'd': case 'q':
+            keys[e.key].pressed = true;
+            lastKey = e.key;
+            break;
         case 'l':
             locationDisplay.style.display = locationDisplay.style.display === 'none' ? 'block' : 'none'
-            break
+            break;
+        // case 'i':
+        //     updateInfoPanel(infoPanel, activeBuilding);
+        //     break;
     }
-    if (e.key === 'i') {
-        updateInfoPanel(infoPanel, activeBuilding);
-    }
-})
+});
 
-
-//when wasd keyip, status in keys object is set to false
 window.addEventListener('keyup', (e) => {
-    switch (e.key) {
-        case 'w':
-            keys.w.pressed = false
-            break
-
-        case 's':
-            keys.s.pressed = false
-            break
-
-        case 'a':
-            keys.a.pressed = false
-            break
-
-        case 'd':
-            keys.d.pressed = false
-            break
-        case 'q':
-            keys.q.pressed = false
-            break
-    }
+    if (keys[e.key]) keys[e.key].pressed = false;
     if (e.key === 'i') {
         infoPanel.style.display = 'none';
     }
-})
+});
 
 window.addEventListener('resize', updateUIPositions);
-updateUIPositions();
+updateUIPositions()

@@ -1,23 +1,57 @@
 const buildingInfo = {
     library: {
         name: "Central Library",
-        description: "A vast collection of books and digital resources.",
-        position: { x: 794, y: 1410 }
+        description: "A vast collection of books and digital resources."
+        
     },
-    ECASTBlock: {
-        name: "ECAST Block",
-        description: "Home to cutting-edge laboratories and research facilities.",
-        position: { x: 1818, y: 1090 }
-    },
-    sportsComplex: {
+    basketball: {
         name: "Basketball court",
-        description: "Play basketball anytime",
-        position: { x: 218, y: 1500 }
+        description: "Play basketball anytime"
+       
     },
     canteen: {
         name: "Canteen",
-        description: "A nice place to talk over a cup of tea",
-        position: { x: 3238, y: 818 }
+        description: "A nice place to talk over a cup of tea"
+        
     },
-
+    bhatta_park: {
+        name: "Bhatta Park",
+        description: "Best place to soak the sun during winter"
+        
+    },
+    rac: {
+        name: "RAC",
+        description: "Robotics and Automation Centre"
+        
+    },
+    a_block: {
+        name: "A Block(Workshop)",
+        description: "A lot of machines and stuff"
+        
+    },
+    b_block: {
+        name: "B Block",
+        description: "Civil Department"
+        
+    },
+    c_block: {
+        name: "C Block",
+        description: "A nice place to study"
+        
+    },
+    d_block: {
+        name: "D Block",
+        description: "A nice place to study"
+        
+    },
+    e_block: {
+        name: "ECAST Block",
+        description: "Place for Intelligent people"
+        
+    },
+    f_block: {
+        name: "F Block",
+        description: "Beautiful place"
+        
+    }
 };
