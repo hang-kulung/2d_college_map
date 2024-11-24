@@ -1,4 +1,3 @@
-// Check if the player is colliding with a boundary
 function rectangularCollision({ rectangle1, rectangle2 }) {
     return (
         rectangle1.position.x + rectangle1.width >= rectangle2.position.x &&
@@ -8,7 +7,6 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
     );
 }
 
-// Set up the UI panel positions relative to the canvas
 function updateUIPositions() {
     const canvasRect = canvas.getBoundingClientRect();
     
