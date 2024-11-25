@@ -25,6 +25,9 @@ function updateInfoPanel(infoPanel, building) {
         `;
         infoPanel.style.display = 'block';
     } else {
+        // Hide the panel if the building is null
         infoPanel.style.display = 'none';
     }
 }
+
+
