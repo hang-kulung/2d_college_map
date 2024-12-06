@@ -406,5 +406,510 @@ let levels = {
         // Set up the movable objects
         movables = [background, ...boundaries, foreground, ...canteenExit]
     }
+},
+"eblock1": {
+    init: (offset = { x: -2010, y: -1350 }) => {
+        // Initialize the collision map
+        collisionsMap = []
+        for (let i = 0; i < e1_collisions.length; i += 50) {
+            collisionsMap.push(e1_collisions.slice(i, i + 50))
+        }
+
+        //Initialize the exit map
+        e1ExitMap = []
+        for (let i = 0; i < e1_exit.length; i += 50) {
+            e1ExitMap.push(e1_exit.slice(i, i + 50))
+        }
+
+        // Set the offset
+        offset = {
+            x: offset.x,
+            y: offset.y
+        }
+
+        // Create the exit boundaries
+        e1Exit = []
+        e1ExitMap.forEach((row, i) => {
+            row.forEach((symbol, j) => {
+                if (symbol > 0)
+                    e1Exit.push(
+                        new Boundary({
+                            position: {
+                                x: j * Boundary.width + offset.x,
+                                y: i * Boundary.height + offset.y
+                            }
+                        })
+                    )
+            })
+        })
+
+        // Initialize the exit map
+        e1LvlUpEntryMap = []
+        for (let i = 0; i < e1_lvlup.length; i += 50) {
+            e1LvlUpEntryMap.push(e1_lvlup.slice(i, i + 50))
+        }
+
+        // Create the exit boundaries
+        e1LvlUpEntry = []
+        e1LvlUpEntryMap.forEach((row, i) => {
+            row.forEach((symbol, j) => {
+                if (symbol > 0)
+                    e1LvlUpEntry.push(
+                        new Boundary({
+                            position: {
+                                x: j * Boundary.width + offset.x,
+                                y: i * Boundary.height + offset.y
+                            }
+                        })
+                    )
+            })
+        })
+
+        e1LvlDownEntryMap = []
+        for (let i = 0; i < e1_lvldown.length; i += 50) {
+            e1LvlDownEntryMap.push(e1_lvldown.slice(i, i + 50))
+        }
+
+        // Create the exit boundaries
+        e1LvlDownEntry = []
+        e1LvlDownEntryMap.forEach((row, i) => {
+            row.forEach((symbol, j) => {
+                if (symbol > 0)
+                    e1LvlDownEntry.push(
+                        new Boundary({
+                            position: {
+                                x: j * Boundary.width + offset.x,
+                                y: i * Boundary.height + offset.y
+                            }
+                        })
+                    )
+            })
+        })
+
+        // Create the boundaries
+        boundaries = []
+
+        // // Iterate over the collision map and create boundaries
+        collisionsMap.forEach((row, i) => {
+            row.forEach((symbol, j) => {
+                if (symbol > 0)
+                    boundaries.push(
+                        new Boundary({
+                            position: {
+                                x: j * Boundary.width + offset.x,
+                                y: i * Boundary.height + offset.y
+                            }
+                        })
+                    )
+            })
+        });
+
+        // Load the map image
+        image = new Image()
+        image.src = './img/eblock/e-1.png'
+
+        // Load the foreground image
+        foregroundimage = new Image()
+        foregroundimage.src = './img/eblock/e-1fore.png'
+
+        // Set up the background object
+        background = new Sprite({
+            position: {
+                x: offset.x,
+                y: offset.y
+            },
+            image: image
+        })
+
+        // Set up the foreground object
+        foreground = new Sprite({
+            position: {
+                x: offset.x,
+                y: offset.y
+            },
+            image: foregroundimage
+        })
+
+        // Set up the movable objects
+        movables = [background, ...boundaries, foreground, ...e1Exit, ...e1LvlUpEntry, ...e1LvlDownEntry]
+    }
+},
+"eblock2": {
+    init: (offset = { x: -1400, y: -1200 }) => {
+        // Initialize the collision map
+        collisionsMap = []
+        for (let i = 0; i < e2_collisions.length; i += 50) {
+            collisionsMap.push(e2_collisions.slice(i, i + 50))
+        }
+
+        // Initialize the exit map
+        e2LvlDownEntryMap = []
+        for (let i = 0; i < e2_lvldown.length; i += 50) {
+            e2LvlDownEntryMap.push(e2_lvldown.slice(i, i + 50))
+        }
+
+        // Set the offset
+        offset = {
+            x: offset.x,
+            y: offset.y
+        }
+
+        // Create the exit boundaries
+        e2LvlDownEntry = []
+        e2LvlDownEntryMap.forEach((row, i) => {
+            row.forEach((symbol, j) => {
+                if (symbol > 0)
+                    e2LvlDownEntry.push(
+                        new Boundary({
+                            position: {
+                                x: j * Boundary.width + offset.x,
+                                y: i * Boundary.height + offset.y
+                            }
+                        })
+                    )
+            })
+        })
+
+        e2LvlUpEntryMap = []
+        for (let i = 0; i < e2_lvlup.length; i += 50) {
+            e2LvlUpEntryMap.push(e2_lvlup.slice(i, i + 50))
+        }
+        e2LvlUpEntry = []
+        e2LvlUpEntryMap.forEach((row, i) => {
+            row.forEach((symbol, j) => {
+                if (symbol > 0)
+                    e2LvlUpEntry.push(
+                        new Boundary({
+                            position: {
+                                x: j * Boundary.width + offset.x,
+                                y: i * Boundary.height + offset.y
+                            }
+                        })
+                    )
+            })
+        })
+
+
+        // Create the boundaries
+        boundaries = []
+
+        // // Iterate over the collision map and create boundaries
+        collisionsMap.forEach((row, i) => {
+            row.forEach((symbol, j) => {
+                if (symbol > 0)
+                    boundaries.push(
+                        new Boundary({
+                            position: {
+                                x: j * Boundary.width + offset.x,
+                                y: i * Boundary.height + offset.y
+                            }
+                        })
+                    )
+            })
+        });
+
+        // Load the map image
+        image = new Image()
+        image.src = './img/eblock/e-2.png'
+
+        // Load the foreground image
+        foregroundimage = new Image()
+        foregroundimage.src = './img/eblock/e-2fore.png'
+
+        // Set up the background object
+        background = new Sprite({
+            position: {
+                x: offset.x,
+                y: offset.y
+            },
+            image: image
+        })
+
+        // Set up the foreground object
+        foreground = new Sprite({
+            position: {
+                x: offset.x,
+                y: offset.y
+            },
+            image: foregroundimage
+        })
+
+        // Set up the movable objects
+        movables = [background, ...boundaries, foreground, ...e2LvlDownEntry, ...e2LvlUpEntry]
+    }
+},
+
+"eblock3": {
+    init: (offset = { x: -1400, y: -1200 }) => {
+        // Initialize the collision map
+        collisionsMap = []
+        for (let i = 0; i < e3_collisions.length; i += 50) {
+            collisionsMap.push(e3_collisions.slice(i, i + 50))
+        }
+
+        // Initialize the exit map
+        e3LvlDownEntryMap = []
+        for (let i = 0; i < e3_lvldown.length; i += 50) {
+            e3LvlDownEntryMap.push(e3_lvldown.slice(i, i + 50))
+        }
+
+        // Set the offset
+        offset = {
+            x: offset.x,
+            y: offset.y
+        }
+
+        // Create the exit boundaries
+        e3LvlDownEntry = []
+        e3LvlDownEntryMap.forEach((row, i) => {
+            row.forEach((symbol, j) => {
+                if (symbol > 0)
+                    e3LvlDownEntry.push(
+                        new Boundary({
+                            position: {
+                                x: j * Boundary.width + offset.x,
+                                y: i * Boundary.height + offset.y
+                            }
+                        })
+                    )
+            })
+        })
+
+        e3LvlUpEntryMap = []
+        for (let i = 0; i < e3_lvlup.length; i += 50) {
+            e3LvlUpEntryMap.push(e3_lvlup.slice(i, i + 50))
+        }
+        e3LvlUpEntry = []
+        e3LvlUpEntryMap.forEach((row, i) => {
+            row.forEach((symbol, j) => {
+                if (symbol > 0)
+                    e3LvlUpEntry.push(
+                        new Boundary({
+                            position: {
+                                x: j * Boundary.width + offset.x,
+                                y: i * Boundary.height + offset.y
+                            }
+                        })
+                    )
+            })
+        })
+
+
+        // Create the boundaries
+        boundaries = []
+
+        // // Iterate over the collision map and create boundaries
+        collisionsMap.forEach((row, i) => {
+            row.forEach((symbol, j) => {
+                if (symbol > 0)
+                    boundaries.push(
+                        new Boundary({
+                            position: {
+                                x: j * Boundary.width + offset.x,
+                                y: i * Boundary.height + offset.y
+                            }
+                        })
+                    )
+            })
+        });
+
+        // Load the map image
+        image = new Image()
+        image.src = './img/eblock/e-3.png'
+
+        // Load the foreground image
+        foregroundimage = new Image()
+        foregroundimage.src = './img/eblock/e-3fore.png'
+
+        // Set up the background object
+        background = new Sprite({
+            position: {
+                x: offset.x,
+                y: offset.y
+            },
+            image: image
+        })
+
+        // Set up the foreground object
+        foreground = new Sprite({
+            position: {
+                x: offset.x,
+                y: offset.y
+            },
+            image: foregroundimage
+        })
+
+        // Set up the movable objects
+        movables = [background, ...boundaries, foreground, ...e3LvlDownEntry, ...e3LvlUpEntry]
+    }
+},
+
+"eblock4": {
+    init: (offset = { x: -1400, y: -1200 }) => {
+        // Initialize the collision map
+        collisionsMap = []
+        for (let i = 0; i < e4_collisions.length; i += 50) {
+            collisionsMap.push(e4_collisions.slice(i, i + 50))
+        }
+
+        // Initialize the exit map
+        e4LvlDownEntryMap = []
+        for (let i = 0; i < e4_lvldown.length; i += 50) {
+            e4LvlDownEntryMap.push(e4_lvldown.slice(i, i + 50))
+        }
+
+        // Set the offset
+        offset = {
+            x: offset.x,
+            y: offset.y
+        }
+
+        // Create the exit boundaries
+        e4LvlDownEntry = []
+        e4LvlDownEntryMap.forEach((row, i) => {
+            row.forEach((symbol, j) => {
+                if (symbol > 0)
+                    e4LvlDownEntry.push(
+                        new Boundary({
+                            position: {
+                                x: j * Boundary.width + offset.x,
+                                y: i * Boundary.height + offset.y
+                            }
+                        })
+                    )
+            })
+        })
+
+
+        // Create the boundaries
+        boundaries = []
+
+        // // Iterate over the collision map and create boundaries
+        collisionsMap.forEach((row, i) => {
+            row.forEach((symbol, j) => {
+                if (symbol > 0)
+                    boundaries.push(
+                        new Boundary({
+                            position: {
+                                x: j * Boundary.width + offset.x,
+                                y: i * Boundary.height + offset.y
+                            }
+                        })
+                    )
+            })
+        });
+
+        // Load the map image
+        image = new Image()
+        image.src = './img/eblock/e-4.png'
+
+        // Load the foreground image
+        foregroundimage = new Image()
+        foregroundimage.src = './img/eblock/e-4fore.png'
+
+        // Set up the background object
+        background = new Sprite({
+            position: {
+                x: offset.x,
+                y: offset.y
+            },
+            image: image
+        })
+
+        // Set up the foreground object
+        foreground = new Sprite({
+            position: {
+                x: offset.x,
+                y: offset.y
+            },
+            image: foregroundimage
+        })
+
+        // Set up the movable objects
+        movables = [background, ...boundaries, foreground, ...e4LvlDownEntry]
+    }
+},
+"eblock0": {
+    init: (offset = { x: -1400, y: -1200 }) => {
+        // Initialize the collision map
+        collisionsMap = []
+        for (let i = 0; i < e0_collisions.length; i += 50) {
+            collisionsMap.push(e0_collisions.slice(i, i + 50))
+        }
+
+    
+        // Set the offset
+        offset = {
+            x: offset.x,
+            y: offset.y
+        }
+
+        e0LvlUpEntryMap = []
+        for (let i = 0; i < e0_lvlup.length; i += 50) {
+            e0LvlUpEntryMap.push(e0_lvlup.slice(i, i + 50))
+        }
+        e0LvlUpEntry = []
+        e0LvlUpEntryMap.forEach((row, i) => {
+            row.forEach((symbol, j) => {
+                if (symbol > 0)
+                    e0LvlUpEntry.push(
+                        new Boundary({
+                            position: {
+                                x: j * Boundary.width + offset.x,
+                                y: i * Boundary.height + offset.y
+                            }
+                        })
+                    )
+            })
+        })
+
+
+        // Create the boundaries
+        boundaries = []
+
+        // // Iterate over the collision map and create boundaries
+        collisionsMap.forEach((row, i) => {
+            row.forEach((symbol, j) => {
+                if (symbol > 0)
+                    boundaries.push(
+                        new Boundary({
+                            position: {
+                                x: j * Boundary.width + offset.x,
+                                y: i * Boundary.height + offset.y
+                            }
+                        })
+                    )
+            })
+        });
+
+        // Load the map image
+        image = new Image()
+        image.src = './img/eblock/e-0.png'
+
+        // Load the foreground image
+        foregroundimage = new Image()
+        foregroundimage.src = './img/eblock/e-0fore.png'
+
+        // Set up the background object
+        background = new Sprite({
+            position: {
+                x: offset.x,
+                y: offset.y
+            },
+            image: image
+        })
+
+        // Set up the foreground object
+        foreground = new Sprite({
+            position: {
+                x: offset.x,
+                y: offset.y
+            },
+            image: foregroundimage
+        })
+
+        // Set up the movable objects
+        movables = [background, ...boundaries, foreground, ...e0LvlUpEntry]
+    }
 }
 };

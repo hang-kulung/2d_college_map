@@ -108,44 +108,7 @@ function animate() {
 
     // Handle level transitions
     else if (keys.q.pressed && lastKey == 'q') {
-        // Transition from main level to canteen
-        if (level == 'main') {
-            for (let i = 0; i < canteenEntry.length; i++) {
-                const canteenEntry1 = canteenEntry[i]
-                if (rectangularCollision({
-                    rectangle1: player,
-                    rectangle2: canteenEntry1
-                })) {
-                    gsap.to(overlay, {
-                        opacity: 1,
-                        onComplete: () => {
-                            level = "canteen"
-                            levels[level].init()
-                        }
-                    })
-                    break
-                }
-            }
-        } 
-        // Transition from canteen to main level
-        else if (level == "canteen") {
-            for (let i = 0; i < canteenExit.length; i++) {
-                const canteenExit1 = canteenExit[i]
-                if (rectangularCollision({
-                    rectangle1: player,
-                    rectangle2: canteenExit1
-                })) {
-                    gsap.to(overlay, {
-                        opacity: 1,
-                        onComplete: () => {
-                            level = "main"
-                            levels[level].init(offset = { x: -3225, y: -820 })
-                        }
-                    })
-                    break
-                }
-            }
-        }
+        checkEntry();
     }
 
     // Check for collisions
