@@ -12,11 +12,3 @@ const keys = {
     d: { pressed: false },
     q: { pressed: false },
 };
-
-// // Load character images for different directions
-// const playerSprites = {
-//     down: './img/playerDown.png',
-//     up: './img/playerUp.png',
-//     left: './img/playerLeft.png',
-//     right: './img/playerRight.png',
-// };

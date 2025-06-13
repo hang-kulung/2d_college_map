@@ -4,10 +4,6 @@ const overlay = {
     opacity: 0,
 }
 
-infoPanel = createInfoPanel()
-
-const locationDisplay = createLocationDisplay();  
-
 levels[level].init();
 
 let spritesInitialized = false; 
@@ -110,12 +106,6 @@ function animate() {
     else if (keys.q.pressed && lastKey == 'q') {
         checkEntry();
     }
-
-    // Check for collisions
-    checkCollision()
-
-    // Update location display
-    updateLocationDisplay(locationDisplay, -background.position.x, -background.position.y)
 }
 
 animate();
@@ -126,21 +116,9 @@ window.addEventListener('keydown', (e) => {
             keys[e.key].pressed = true;
             lastKey = e.key;
             break;
-        case 'l':
-            locationDisplay.style.display = locationDisplay.style.display === 'none' ? 'block' : 'none'
-            break;
-        // case 'i':
-        //     updateInfoPanel(infoPanel, activeBuilding);
-        //     break;
     }
 });
 
 window.addEventListener('keyup', (e) => {
     if (keys[e.key]) keys[e.key].pressed = false;
-    if (e.key === 'i') {
-        infoPanel.style.display = 'none';
-    }
 });
-
-window.addEventListener('resize', updateUIPositions);
-updateUIPositions()
