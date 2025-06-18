@@ -1,12 +1,12 @@
 const buildingInfo = {
     library: {
         name: "Central Library",
-        description: "A vast collection of books and digital resources."
+        description: "A vast collection of books and resources."
         
     },
     basketball: {
         name: "Basketball court",
-        description: "Play basketball anytime"
+        description: "Play anytime"
        
     },
     canteen: {
@@ -16,7 +16,7 @@ const buildingInfo = {
     },
     bhatta_park: {
         name: "Bhatta Park",
-        description: "Best place to soak the sun during winter"
+        description: "Place to Rest"
         
     },
     rac: {
@@ -25,33 +25,33 @@ const buildingInfo = {
         
     },
     a_block: {
-        name: "A Block(Workshop)",
-        description: "A lot of machines and stuff"
+        name: "A Block",
+        description: ""
         
     },
     b_block: {
         name: "B Block",
-        description: "Civil Department"
+        description: ""
         
     },
     c_block: {
         name: "C Block",
-        description: "A nice place to study"
+        description: ""
         
     },
     d_block: {
         name: "D Block",
-        description: "A nice place to study"
+        description: ""
         
     },
     e_block: {
-        name: "ECAST Block",
-        description: "Place for Intelligent people"
+        name: "E Block",
+        description: "Press 'Q' to Interact"
         
     },
     f_block: {
         name: "F Block",
-        description: "Beautiful place"
+        description: ""
         
     }
 };
